@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Menus list</h1>
+
+    <div class="text-right">
+        <a href="{{ path('admin_menu_index') }}">Top</a> |
+
+        {% if subMenu is defined and subMenu is not empty %}
+            <a href="{{ path('admin_menu_new', {'sub-menu':subMenu}) }}" id="create-menu-item">Create a new sub menu</a>
+        {% else %}
+            <a href="{{ path('admin_menu_new') }}" id="create-menu-item">Create a new menu</a>
+        {% endif %}
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Url</th>
+                <th>Sub menu</th>
+                <th>Status</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Deletedat</th>
+                <th>Showtype</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for menu in menus %}
+            <tr>
+                <td><a href="{{ path('admin_menu_show', { 'id': menu.id }) }}">{{ menu.id }}</a></td>
+                <td>{{ menu.title }}</td>
+                <td>{{ menu.url }}</td>
+                <td>
+                    <a href="{{ path('admin_menu_index', {'sub-menu':menu.id}) }}" class="sub-menu" title="{{ menu.title }}">Sub menu</a>
+
+                </td>
+                <td>{{ menu.status }}</td>
+                <td>{% if menu.createdAt %}{{ menu.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if menu.updatedAt %}{{ menu.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if menu.deletedAt %}{{ menu.deletedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ menu.showType }}</td>
+                <td>
+
+                    <a href="{{ path('admin_menu_show', { 'id': menu.id }) }}">show</a>
+                    <a href="{{ path('admin_menu_edit', { 'id': menu.id }) }}"> <i class="ion ion-md-create"></i></a>
+                    {% if menu.parent is not empty %}
+                        <a href="{{ path('admin_menu_up', { 'id': menu.id }) }}"><span class="icon-results__cell mouseOff"><i class="ion ion-md-arrow-round-up"></i></span></a>
+                        <a href="{{ path('admin_menu_down', { 'id': menu.id }) }}"><span class="icon-results__cell mouseOff"><i class="ion ion-md-arrow-round-down"></i></span></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

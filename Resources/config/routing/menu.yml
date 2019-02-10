@@ -1,0 +1,34 @@
+admin_menu_index:
+    path:     /
+    defaults: { _controller: "MenuBundle:Menu:index" }
+    methods:  GET
+
+admin_menu_show:
+    path:     /{id}/show
+    defaults: { _controller: "MenuBundle:Menu:show" }
+    methods:  GET
+
+admin_menu_new:
+    path:     /new
+    defaults: { _controller: "MenuBundle:Menu:new" }
+    methods:  [GET, POST]
+
+admin_menu_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MenuBundle:Menu:up" }
+    methods:  [GET, POST]
+
+admin_menu_up:
+    path:     /{id}/up
+    defaults: { _controller: "MenuBundle:Menu:up" }
+    methods:  [GET, POST]
+
+admin_menu_down:
+    path:     /{id}/down
+    defaults: { _controller: "MenuBundle:Menu:down" }
+    methods:  [GET, POST]
+
+admin_menu_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MenuBundle:Menu:delete" }
+    methods:  DELETE

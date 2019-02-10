@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Menu</h1>
+    {% for message in app.flashes('menuSaved') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ menu.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ menu.title }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ menu.url }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ menu.status }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if menu.createdAt %}{{ menu.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if menu.updatedAt %}{{ menu.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deletedat</th>
+                <td>{% if menu.deletedAt %}{{ menu.deletedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Showtype</th>
+                <td>{{ menu.showType }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            {% if menu.parent.id is defined and menu.parent.id  is not empty %}
+                <a href="{{ path('admin_menu_index', {'sub-menu':menu.parent.id}) }}" id="back-to-list">Back to the list</a>
+            {% else %}
+                <a href="{{ path('admin_menu_index') }}" id="back-to-list">Back to the list</a>
+            {% endif %}
+        </li>
+        <li>
+            <a href="{{ path('admin_menu_edit', { 'id': menu.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

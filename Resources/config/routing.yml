@@ -1,3 +1,9 @@
 menu_homepage:
     path:     /
     defaults: { _controller: MenuBundle:Default:index }
+
+
+routers_admin_course:
+   resource: "@MenuBundle/Resources/config/routing/menu.yml"
+   prefix:   /admin/menu
+
