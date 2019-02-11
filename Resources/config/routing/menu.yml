@@ -15,7 +15,7 @@ admin_menu_new:
 
 admin_menu_edit:
     path:     /{id}/edit
-    defaults: { _controller: "MenuBundle:Menu:up" }
+    defaults: { _controller: "MenuBundle:Menu:edit" }
     methods:  [GET, POST]
 
 admin_menu_up:

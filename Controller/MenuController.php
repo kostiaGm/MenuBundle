@@ -37,6 +37,7 @@ class MenuController extends Controller
         $menus = $menuQueryBuilder->getQuery()->getResult();
         return $this->render('@Menu/menu/index.html.twig', array(
             'menus' => $menus,
+            'types' =>  Menu::SHOW_TYPE,
             'subMenu' => (!empty($subMenu) ? $subMenu->getId() : null)
 
         ));
@@ -126,7 +127,13 @@ class MenuController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_menu_edit', array('id' => $menu->getId()));
+            $options = [];
+
+            if (!empty($menu->getParent())) {
+                $options = ['sub-menu'=>$menu->getParent()->getId()];
+            }
+
+            return $this->redirectToRoute('admin_menu_index', $options);
         }
 
         return $this->render('@Menu/menu/edit.html.twig', array(

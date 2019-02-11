@@ -1,1 +1,9 @@
-Hello World!
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {{ menu | raw }}
+       </div>
+    </nav>
+{% endblock %}

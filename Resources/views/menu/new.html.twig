@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
     <h1>Menu creation</h1>
 
     {{ form_start(form,  {'attr' : { 'class':'menu-form'} }) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_widget(form) }}
+
+    <hr>
+    {% if subMenu is defined and subMenu is not empty %}
+        <a class="btn btn-default" href="{{ path('admin_menu_index', {'sub-menu':subMenu}) }}">Back to the
+            list</a>
+    {% else %}
+        <a class="btn btn-default" href="{{ path('admin_menu_index') }}">Back to the list</a>
+    {% endif %}
+    <input type="submit" value="Create" class="btn btn-primary"/>
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            {% if subMenu is defined and subMenu is not empty %}
-                <a href="{{ path('admin_menu_index', {'sub-menu':subMenu}) }}">Back to the list</a>
-            {% else %}
-                <a href="{{ path('admin_menu_index') }}">Back to the list</a>
-            {% endif %}
-        </li>
-    </ul>
+
 {% endblock %}

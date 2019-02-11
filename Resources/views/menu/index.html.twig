@@ -24,7 +24,7 @@
                 <th>Createdat</th>
                 <th>Updatedat</th>
                 <th>Deletedat</th>
-                <th>Showtype</th>
+
                 <th>Actions</th>
             </tr>
         </thead>
@@ -38,11 +38,11 @@
                     <a href="{{ path('admin_menu_index', {'sub-menu':menu.id}) }}" class="sub-menu" title="{{ menu.title }}">Sub menu</a>
 
                 </td>
-                <td>{{ menu.status }}</td>
+                <td>{{  types[menu.status] }}</td>
                 <td>{% if menu.createdAt %}{{ menu.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if menu.updatedAt %}{{ menu.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if menu.deletedAt %}{{ menu.deletedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ menu.showType }}</td>
+
                 <td>
 
                     <a href="{{ path('admin_menu_show', { 'id': menu.id }) }}">show</a>

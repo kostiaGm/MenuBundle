@@ -34,11 +34,7 @@ class MenuType extends AbstractType
             ->add('title')
             ->add('url')
             ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'Edit' => 0,
-                    'New' => 1,
-                    'Deleted' => 2
-                ]
+                'choices' => array_flip(Menu::SHOW_TYPE)
             ]);
 
     }

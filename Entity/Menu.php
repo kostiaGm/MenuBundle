@@ -14,6 +14,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Menu
 {
+
+    const SHOW_TYPE = [
+        'Edit',
+        'New',
+        'Deleted'
+    ];
+
     /**
      * @var int
      *

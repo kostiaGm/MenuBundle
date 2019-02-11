@@ -1,21 +1,20 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme edit_form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
     <h1>Menu edit</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+    <hr>
+    {% if subMenu is defined and subMenu is not empty %}
+        <a class="btn btn-default" href="{{ path('admin_menu_index', {'sub-menu':subMenu}) }}">Back to the
+            list</a>
+    {% else %}
+        <a class="btn btn-default" href="{{ path('admin_menu_index') }}">Back to the list</a>
+    {% endif %}
+    <input type="submit" value="Save" class="btn btn-primary" />
+
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_menu_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
 {% endblock %}

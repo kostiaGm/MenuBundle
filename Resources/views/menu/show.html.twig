@@ -9,7 +9,7 @@
         </div>
     {% endfor %}
 
-    <table>
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -46,21 +46,20 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            {% if menu.parent.id is defined and menu.parent.id  is not empty %}
-                <a href="{{ path('admin_menu_index', {'sub-menu':menu.parent.id}) }}" id="back-to-list">Back to the list</a>
-            {% else %}
-                <a href="{{ path('admin_menu_index') }}" id="back-to-list">Back to the list</a>
-            {% endif %}
-        </li>
-        <li>
-            <a href="{{ path('admin_menu_edit', { 'id': menu.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+
+
+    {{ form_start(delete_form) }}
+    {% if menu.parent.id is defined and menu.parent.id  is not empty %}
+        <a class="btn btn-default" href="{{ path('admin_menu_index', {'sub-menu':menu.parent.id}) }}" id="back-to-list">Back to the list</a>
+    {% else %}
+        <a class="btn btn-default" href="{{ path('admin_menu_index') }}" id="back-to-list">Back to the list</a>
+    {% endif %}
+
+    <a class="btn btn-primary" href="{{ path('admin_menu_edit', { 'id': menu.id }) }}">Edit</a>
+
+
+    <input  class="btn btn-danger" type="submit" value="Delete">
+    {{ form_end(delete_form) }}
+
 {% endblock %}
