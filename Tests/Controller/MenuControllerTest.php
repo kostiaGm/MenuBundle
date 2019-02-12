@@ -51,76 +51,30 @@ class MenuControllerTest extends WebTestCase
         // Create a new entry in the database
         $crawler = $client->request('GET', '/admin/menu/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /admin/menu/");
+        $crawler = $this-> saveMenuItems($client,  $crawler, 1, 3);
 
-        $this-> saveMenuItems($client,  $crawler, 1, 3);
-        
-        /**
-         * Создаем меню первого уровня
-         */
-      /*  $title = 'menu 1.1';
-        $url = 'menu-1-1';
-        $crawler = $this->saveMenu($client,  $crawler, $title, $url);*/
-
-        /**
-         * Переходим на страницу списка меню самого верхнего уровня
-         */
-//        $crawler = $this->clickByLink('#back-to-list', $client, $crawler);
-
-        /**
-         * Переходим на страницу списка подменю
-         */
-  /*      $crawler = $this->clickByLink('a.sub-menu', $client, $crawler);
-        
-        dump($crawler->filter('h1')->text());
-        
-        die;*/
-
-        /* foreach ($crawler->filter('.flash-notice') as $item) {
-             var_dump($item->textContent);    
-         }
-         
-         
-         
-          
-         die;*/
-        // dump($messageSuccess);
-
-
-        /*  $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
-  
-          // Fill in the form and submit it
-          $form = $crawler->selectButton('Create')->form(array(
-              'ask_menubundle_menu[field_name]'  => 'Test',
-              // ... other fields to fill
-          ));
-  
-          $client->submit($form);
-          $crawler = $client->followRedirect();
-  
-          // Check data in the show view
-          $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
-  
-          // Edit the entity
-          $crawler = $client->click($crawler->selectLink('Edit')->link());
-  
-          $form = $crawler->selectButton('Update')->form(array(
-              'ask_menubundle_menu[field_name]'  => 'Foo',
-              // ... other fields to fill
-          ));
-  
-          $client->submit($form);
-          $crawler = $client->followRedirect();
-  
-          // Check the element contains an attribute with value equals "Foo"
-          $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
-  
-          // Delete the entity
-          $client->submit($crawler->selectButton('Delete')->form());
-          $crawler = $client->followRedirect();
-  
-          // Check the entity has been delete on the list
-          $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());*/
+        $url = '/admin/menu/?sub-menu=1';
+        // Create a new entry in the database
+        $crawler = $client->request('GET', $url);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET $url");
+        $crawler = $this-> saveMenuItems($client,  $crawler, 2, 3);
+       
     }
+
+
+  /*
+    public function testCreateSubmenu()
+    {
+
+        $client = static::createClient();
+        print 111;
+        $url = '/admin/menu/?sub-menu=1';
+        // Create a new entry in the database
+        $crawler = $client->request('GET', $url);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET $url");
+        $crawler = $this-> saveMenuItems($client,  $crawler, 2, 3);
+       
+    }*/
 
     /**
      * Функция создает несколько элементов меню одного уровня
@@ -131,12 +85,15 @@ class MenuControllerTest extends WebTestCase
      */
     protected function saveMenuItems($client,  $crawler, $level, $count = 3)
     {
+        $crawlerReturn = null;
         for ($i = 1; $i <= $count; $i++) {
             $title = "Test Menu $level.$i.";
             $url = "test-menu-$level-$i";
             $crawler = $this->saveMenu($client,  $crawler, $title, $url);
             $crawler = $this->clickByLink('#back-to-list', $client, $crawler);
         }
+        
+        return $crawler;
     }
 
     /**
@@ -177,7 +134,20 @@ class MenuControllerTest extends WebTestCase
     
     protected function clickByLink($id, $client, $crawler)
     {
-        $link = $crawler->filter($id)->link();
+        print "$id \n";
+        try {
+            $link = $crawler->filter($id)->link();    
+        } catch (\Exception $e) {
+            var_dump(
+                [
+                    $id,
+                    $crawler->filter('h1')->text(),
+                    $e->getMessage()
+                ]
+                
+            ); die;
+        }       
+        
         return $client->click($link);
     }
     
